@@ -1,0 +1,57 @@
+{
+  "clinic-exterior": {
+    "src": "/images/clinic-exterior.webp",
+    "width": 488,
+    "height": 556
+  },
+  "clinic-waiting-room": {
+    "src": "/images/clinic-waiting-room.webp",
+    "width": 680,
+    "height": 453
+  },
+  "clinic-reception": {
+    "src": "/images/clinic-reception.webp",
+    "width": 680,
+    "height": 453
+  },
+  "clinic-reception-desk": {
+    "src": "/images/clinic-reception-desk.webp",
+    "width": 384,
+    "height": 510
+  },
+  "clinic-operatory": {
+    "src": "/images/clinic-operatory.webp",
+    "width": 640,
+    "height": 506
+  },
+  "clinic-operatory-2": {
+    "src": "/images/clinic-operatory-2.webp",
+    "width": 680,
+    "height": 453
+  },
+  "clinic-operatory-3": {
+    "src": "/images/clinic-operatory-3.webp",
+    "width": 384,
+    "height": 510
+  },
+  "dr-bharghav-rayala": {
+    "src": "/images/dr-bharghav-rayala.webp",
+    "width": 560,
+    "height": 580
+  },
+  "dr-sai-meghana-yarlagadda": {
+    "src": "/images/dr-sai-meghana-yarlagadda.webp",
+    "width": 560,
+    "height": 563
+  },
+  "logo-lockup": {
+    "src": "/images/logo-lockup.webp",
+    "width": 510,
+    "height": 425
+  },
+  "logo-emblem": {
+    "src": "/images/logo-emblem.webp",
+    "width": 256,
+    "height": 256
+  }
+}
