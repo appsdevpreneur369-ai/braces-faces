@@ -28,7 +28,15 @@ export const clinic = {
   // Hours from the brief: "10 am till 8 pm". Weekly days not given — shown without day names (verify Sunday).
   hours: { open: '10:00', close: '20:00', label: '10 AM – 8 PM', verifyDays: true },
   timeZone: 'Asia/Kolkata',
-  google: { rating: '5.0', reviewCount: 55, verify: true },
+  // rating/count = fallback shown until the live Places API answers (src/lib/google-reviews.ts). placeId: set once
+  // known (or GOOGLE_PLACE_ID env); until then the server finds it with searchQuery.
+  google: {
+    rating: '5.0',
+    reviewCount: 55,
+    verify: true,
+    placeId: '' as string,
+    searchQuery: 'Braces and Faces Dental & Maxillofacial Clinic, Tadepalli, Andhra Pradesh 522501',
+  },
 } as const;
 
 export const fullAddress = [

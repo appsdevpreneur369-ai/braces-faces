@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { PageHeader } from '@/components/sections';
 import { clinic } from '@/content/clinic';
 
-export const metadata: Metadata = { title: 'Privacy', description: 'How the Braces & Faces website handles your information.' };
+export const metadata: Metadata = { title: 'Privacy', description: 'How the Braces & Faces website handles your information.', alternates: { canonical: '/privacy' } };
 
 export default function PrivacyPage() {
   return (

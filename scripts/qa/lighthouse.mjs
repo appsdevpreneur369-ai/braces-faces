@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const [base = 'http://localhost:3100', out = 'docs/seo-reports/latest', ...only] = process.argv.slice(2);
-const ROUTES = only.length ? only : ['/', '/doctors', '/doctors/dr-bharghav-rayala', '/treatments', '/book', '/contact', '/privacy'];
+const ROUTES = only.length ? only : ['/', '/about', '/treatments', '/doctors', '/doctors/dr-bharghav-rayala', '/gallery', '/faqs', '/contact', '/book', '/privacy'];
 const chrome = process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 fs.mkdirSync(out, { recursive: true });
 const rows = [];

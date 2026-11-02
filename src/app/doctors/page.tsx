@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { BookTrigger } from '@/components/assistant/AssistantProvider';
 import { ArrowRight, CalendarCheck } from 'lucide-react';
 import { CtaBand, PageHeader } from '@/components/sections';
 import { Photo, Verify } from '@/components/ui';
@@ -9,6 +10,7 @@ import { cn } from '@/lib/cn';
 export const metadata: Metadata = {
   title: 'Our Doctors',
   description: 'Meet Dr. Bharghav Rayala, Consultant Orthodontist, and Dr. Sai Meghana Yarlagadda, Consultant Oral & Maxillofacial Surgeon, at Braces & Faces, Tadepalli.',
+  alternates: { canonical: '/doctors' },
 };
 
 export default function DoctorsPage() {
@@ -39,7 +41,7 @@ export default function DoctorsPage() {
                   </ul>
                   <p className="mt-6 leading-relaxed text-body">{d.summary}</p>
                   <div className="mt-8 flex flex-wrap gap-3">
-                    <Link href={`/book?doctor=${d.slug}`} className="btn-ink"><CalendarCheck className="h-4 w-4" aria-hidden /> Book appointment</Link>
+                    <BookTrigger prefill={{ doctor: d.slug }} className="btn-ink"><CalendarCheck className="h-4 w-4" aria-hidden /> Book appointment</BookTrigger>
                     <Link href={`/doctors/${d.slug}`} className="btn-ghost">Full profile <ArrowRight className="h-4 w-4" aria-hidden /></Link>
                   </div>
                 </div>

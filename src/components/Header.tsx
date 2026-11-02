@@ -8,6 +8,7 @@ import { clinic, telHref } from '@/content/clinic';
 import { NAV } from '@/content/nav';
 import { generalWhatsappHref } from '@/lib/appointment';
 import { cn } from '@/lib/cn';
+import { BookTrigger } from './assistant/AssistantProvider';
 import { OpenStatus } from './client';
 import { Logo } from './Logo';
 import { WhatsAppIcon } from './ui';
@@ -46,7 +47,7 @@ export function Header() {
     };
   }, [open]);
 
-  const isActive = (href: string) => !href.includes('#') && (pathname === href || pathname.startsWith(`${href}/`));
+  const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`));
 
   return (
     <>
@@ -88,8 +89,8 @@ export function Header() {
       >
         <div className="container-site flex h-full items-center justify-between gap-4">
           <Logo />
-          <nav aria-label="Main" className="hidden h-full lg:block">
-            <ul className="flex h-full items-center gap-1">
+          <nav aria-label="Main" className="hidden h-full xl:block">
+            <ul className="flex h-full items-center">
               {NAV.map((item) => (
                 <li key={item.href} className="h-full">
                   <Link href={item.href} aria-current={isActive(item.href) ? 'page' : undefined} className="nav-link">
@@ -103,23 +104,23 @@ export function Header() {
             <a href={telHref} aria-label={`Call ${clinic.phone.display}`} className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5 sm:hidden">
               <Phone className="h-5 w-5 text-rose" aria-hidden />
             </a>
-            <Link href="/book" className="btn-ink hidden min-h-[44px] px-5 sm:inline-flex">
+            <BookTrigger className="btn-ink hidden min-h-[44px] px-5 sm:inline-flex">
               <CalendarCheck className="h-4 w-4" aria-hidden /> Book appointment
-            </Link>
+            </BookTrigger>
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? 'Close menu' : 'Open menu'}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5 lg:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink hover:bg-ink/5 xl:hidden"
             >
               {open ? <X className="h-6 w-6" aria-hidden /> : <Menu className="h-6 w-6" aria-hidden />}
             </button>
           </div>
         </div>
 
-        <div id="mobile-menu" hidden={!open} style={{ top: menuTop }} className="fixed inset-x-0 bottom-0 overflow-y-auto bg-white px-5 pb-28 pt-2 lg:hidden">
+        <div id="mobile-menu" hidden={!open} style={{ top: menuTop }} className="fixed inset-x-0 bottom-0 overflow-y-auto bg-white px-5 pb-28 pt-2 xl:hidden">
           <nav aria-label="Mobile" className="flex flex-col">
             {NAV.map((item) => (
               <Link
@@ -135,9 +136,9 @@ export function Header() {
             ))}
           </nav>
           <div className="mt-8 grid gap-3">
-            <Link href="/book" onClick={() => setOpen(false)} className="btn-ink w-full">
+            <BookTrigger onClick={() => setOpen(false)} className="btn-ink w-full">
               <CalendarCheck className="h-4 w-4" aria-hidden /> Book appointment
-            </Link>
+            </BookTrigger>
             <a href={telHref} className="btn-ghost w-full">
               <Phone className="h-4 w-4" aria-hidden /> Call {clinic.phone.display}
             </a>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { BookTrigger } from '@/components/assistant/AssistantProvider';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, CalendarCheck, Check, Phone } from 'lucide-react';
 import { CtaBand } from '@/components/sections';
@@ -16,7 +17,7 @@ export const generateStaticParams = () => doctors.map((d) => ({ slug: d.slug }))
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const d = doctorBySlug(params.slug);
   if (!d) return {};
-  return { title: `${d.name} — ${d.title}`, description: `${d.name}, ${d.qualifications}. ${d.headline} Book at Braces & Faces, Tadepalli.` };
+  return { title: `${d.name} — ${d.title}`, description: `${d.name}, ${d.qualifications}. ${d.headline} Book at Braces & Faces, Tadepalli.`, alternates: { canonical: `/doctors/${d.slug}` } };
 }
 
 export default function DoctorPage({ params }: { params: { slug: string } }) {
@@ -51,7 +52,7 @@ export default function DoctorPage({ params }: { params: { slug: string } }) {
               <p className="mt-8 max-w-2xl font-heading text-2xl leading-snug text-ink">{d.headline}</p>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-body">{d.summary}</p>
               <div className="mt-8 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
-                <Link href={`/book?doctor=${d.slug}`} className="btn-ink"><CalendarCheck className="h-4 w-4" aria-hidden /> Book with {d.name.split(' ').slice(0, 2).join(' ')}</Link>
+                <BookTrigger prefill={{ doctor: d.slug }} className="btn-ink"><CalendarCheck className="h-4 w-4" aria-hidden /> Book with {d.name.split(' ').slice(0, 2).join(' ')}</BookTrigger>
                 <a href={generalWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn-wa"><WhatsAppIcon className="h-4 w-4" /> WhatsApp</a>
                 <a href={telHref} className="btn-ghost"><Phone className="h-4 w-4" aria-hidden /> {clinic.phone.display}</a>
               </div>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Nunito_Sans, Sora } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { AssistantProvider } from '@/components/assistant/AssistantProvider';
 import { RevealObserver } from '@/components/client';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
   description:
     'Braces, Invisalign, clear aligners, jaw surgery, TMJ and facial trauma care at Braces & Faces — a Maxillofacial & Orthodontic Centre on NH 16, Tadepalli, Vijayawada. Book on WhatsApp or call +91 88669 22449.',
   applicationName: clinic.name,
+  alternates: { canonical: '/' },
   robots: NOINDEX ? { index: false, follow: false } : { index: true, follow: true },
   formatDetection: { telephone: false, email: false, address: false },
   openGraph: { type: 'website', siteName: clinic.name, locale: 'en_IN', images: [{ url: '/images/clinic-waiting-room.webp', width: 680, height: 453 }] },
@@ -36,12 +38,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicJsonLd()) }} />
-        <Header />
-        <main id="main" tabIndex={-1} className="outline-none">
-          {children}
-        </main>
-        <Footer />
-        <MobileActionBar />
+        <AssistantProvider>
+          <Header />
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <Footer />
+          <MobileActionBar />
+        </AssistantProvider>
         <RevealObserver />
       </body>
     </html>

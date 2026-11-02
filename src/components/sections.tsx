@@ -1,114 +1,18 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, CalendarCheck, Clock, MapPin, MessageCircle, Phone, Send, Star } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CalendarCheck, Clock, MapPin, MessageCircle, Phone, Send } from 'lucide-react';
 import { clinic, fullAddress, telHref } from '@/content/clinic';
 import { type Doctor, doctors } from '@/content/doctors';
+import { CONCERNS } from '@/content/concerns';
 import { faqs } from '@/content/faqs';
 import { treatments } from '@/content/treatments';
 import { generalWhatsappHref } from '@/lib/appointment';
 import { cn } from '@/lib/cn';
+import { BookTrigger } from './assistant/AssistantProvider';
 import { Gallery, type GalleryItem } from './Gallery';
 import { MapFacade } from './MapFacade';
 import { Motif, Photo, SectionHeading, Verify, WhatsAppIcon } from './ui';
 
 const [ortho, maxfax] = doctors;
-
-/* ─────────────────────────────── Hero ─────────────────────────────── */
-export function Hero() {
-  return (
-    <section className="relative isolate overflow-hidden bg-ink-deep text-white">
-      {/* soft brand glows + fine grid */}
-      <div aria-hidden className="absolute -left-32 top-10 -z-10 h-[28rem] w-[28rem] rounded-full bg-blush/25 blur-[120px]" />
-      <div aria-hidden className="absolute -right-24 bottom-0 -z-10 h-[26rem] w-[26rem] rounded-full bg-mint/20 blur-[120px]" />
-      <div aria-hidden className="absolute inset-0 -z-10 opacity-[0.07] [background-image:linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
-
-      <div className="container-site grid items-center gap-12 pb-24 pt-12 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-28 lg:pt-20">
-        <div className="animate-fade-up">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white/85">
-              <MapPin className="h-3.5 w-3.5 text-blush" aria-hidden /> Tadepalli · Vijayawada
-            </span>
-          </div>
-          <h1 className="mt-6 font-heading text-[2.35rem] font-bold leading-[1.12] tracking-[-0.03em] text-white sm:text-[3.4rem] lg:text-[3.6rem]">
-            Specialist care for your{' '}
-            <span className="relative whitespace-nowrap text-blush">
-              smile
-              <svg aria-hidden viewBox="0 0 120 12" className="absolute -bottom-1 left-0 w-full text-blush/70" preserveAspectRatio="none"><path d="M2 9c30-6 80-8 116-3" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" /></svg>
-            </span>{' '}
-            and your <span className="text-mint">face</span>.
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-            A Maxillofacial &amp; Orthodontic Centre where an orthodontist and an oral &amp; maxillofacial surgeon work side by side — from braces and Invisalign to jaw surgery, TMJ care and facial trauma.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
-            <Link href="/book" className="btn-blush text-base">
-              <CalendarCheck className="h-5 w-5" aria-hidden /> Book an appointment
-            </Link>
-            <a href={generalWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn-wa text-base">
-              <WhatsAppIcon className="h-5 w-5" /> WhatsApp us
-            </a>
-          </div>
-          <a href={telHref} className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-[15px] font-semibold text-white/80 underline-offset-4 hover:text-white hover:underline">
-            <Phone className="h-4 w-4 text-blush" aria-hidden /> or call {clinic.phone.display}
-          </a>
-          <dl className="mt-10 grid max-w-lg grid-cols-3 divide-x divide-white/10 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur">
-            <div className="px-4 py-4">
-              <dt className="text-[11px] font-semibold uppercase tracking-wider text-white/55">Google</dt>
-              <dd className="mt-1 flex items-center gap-1 font-heading text-2xl text-white">
-                {clinic.google.rating} <Star className="h-4 w-4 fill-[#FBBC04] text-[#FBBC04]" aria-hidden />
-              </dd>
-            </div>
-            <div className="px-4 py-4">
-              <dt className="text-[11px] font-semibold uppercase tracking-wider text-white/55">Specialists</dt>
-              <dd className="mt-1 font-heading text-2xl text-white">2 MDS</dd>
-            </div>
-            <div className="px-4 py-4">
-              <dt className="text-[11px] font-semibold uppercase tracking-wider text-white/55">Hours</dt>
-              <dd className="mt-1 font-heading text-2xl text-white">10–8</dd>
-            </div>
-          </dl>
-        </div>
-
-        {/* Visual: the two specialists in arches — blush = orthodontics (the tooth), mint = maxillofacial (the face) */}
-        <div className="relative mx-auto w-full max-w-[560px] animate-fade-up [animation-delay:150ms]">
-          <Motif className="pointer-events-none absolute -right-6 -top-8 hidden h-40 w-40 text-blush/30 sm:block" />
-          <div className="grid grid-cols-2 items-end gap-4 sm:gap-5">
-            <HeroArch doctor={ortho} tone="blush" />
-            <HeroArch doctor={maxfax} tone="mint" className="translate-y-10" />
-          </div>
-          <div className="absolute -left-2 top-3 flex animate-float items-center gap-2 whitespace-nowrap rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-ink shadow-lift sm:-left-6 sm:text-sm">
-            <Star className="h-4 w-4 fill-[#FBBC04] text-[#FBBC04]" aria-hidden /> {clinic.google.rating} on Google
-            <span className="text-muted">· {clinic.google.reviewCount} reviews</span>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HeroArch({ doctor, tone, className }: { doctor: Doctor; tone: 'blush' | 'mint'; className?: string }) {
-  return (
-    <Link href={`/doctors/${doctor.slug}`} className={cn('group relative block', className)}>
-      <div
-        className={cn(
-          'relative aspect-[3/4.2] overflow-hidden rounded-t-full rounded-b-[1.75rem] bg-gradient-to-b ring-1 ring-white/15',
-          tone === 'blush' ? 'from-blush/40 to-blush' : 'from-mint/40 to-mint',
-        )}
-      >
-        <Photo
-          name={doctor.image}
-          alt={`${doctor.name}, ${doctor.specialityLabel}`}
-          eager
-          sizes="(min-width: 1024px) 270px, 45vw"
-          className="absolute inset-x-0 bottom-0 h-[88%] w-full object-cover object-top transition duration-700 group-hover:scale-[1.03]"
-        />
-      </div>
-      <div className="mt-3 rounded-2xl bg-white/[0.06] px-3 py-2.5 ring-1 ring-white/10 backdrop-blur">
-        <p className="truncate text-sm font-bold text-white">{doctor.name}</p>
-        <p className={cn('truncate text-xs font-semibold', tone === 'blush' ? 'text-blush' : 'text-mint')}>{doctor.specialityLabel}</p>
-      </div>
-    </Link>
-  );
-}
 
 /* ─────────────────────────── Treatment ticker ─────────────────────────── */
 export function TreatmentTicker() {
@@ -169,9 +73,9 @@ function SpecialityCard({ doctor }: { doctor: Doctor }) {
         ))}
       </ul>
       <div className="relative mt-auto flex flex-wrap gap-3 pt-8">
-        <Link href={`/book?doctor=${doctor.slug}`} className="btn-ink min-h-[44px] px-5 text-sm">
+        <BookTrigger prefill={{ doctor: doctor.slug }} className="btn-ink min-h-[44px] px-5 text-sm">
           <CalendarCheck className="h-4 w-4" aria-hidden /> Book with {doctor.name.split(' ').slice(0, 2).join(' ')}
-        </Link>
+        </BookTrigger>
         <Link href={`/doctors/${doctor.slug}`} className="inline-flex min-h-[44px] items-center gap-1.5 px-2 text-sm font-semibold text-ink hover:gap-2.5">
           Full profile <ArrowRight className="h-4 w-4 transition-all" aria-hidden />
         </Link>
@@ -181,18 +85,7 @@ function SpecialityCard({ doctor }: { doctor: Doctor }) {
 }
 
 /* ─────────────────────────── Concern finder ─────────────────────────── */
-const CONCERNS: { label: string; hint: string; doctor: Doctor; treatment?: string }[] = [
-  { label: 'Crooked or gapped teeth', hint: 'Braces or aligners', doctor: ortho, treatment: 'aligners' },
-  { label: 'I want “invisible” braces', hint: 'Invisalign / clear aligners', doctor: ortho, treatment: 'invisalign' },
-  { label: 'My child sucks a thumb', hint: 'Habit-breaking therapy', doctor: ortho, treatment: 'habit-breaking' },
-  { label: 'I grind my teeth at night', hint: 'Bruxism care, night guard', doctor: ortho, treatment: 'bruxism' },
-  { label: 'I play contact sports', hint: 'Custom mouth guard', doctor: ortho, treatment: 'mouth-guards' },
-  { label: 'Jaw clicks or hurts', hint: 'TMJ assessment', doctor: maxfax, treatment: 'tmj' },
-  { label: 'Injury to the face or jaw', hint: 'Facial trauma care', doctor: maxfax, treatment: 'facial-trauma' },
-  { label: 'A swelling on my face', hint: 'Swelling evaluation', doctor: maxfax, treatment: 'facial-swellings' },
-  { label: 'Ulcer or patch that won’t heal', hint: 'Oral cancer screening', doctor: maxfax, treatment: 'oral-cancer' },
-  { label: 'Upper / lower jaw sticks out', hint: 'Braces + jaw surgery plan', doctor: maxfax, treatment: 'jaw-surgery' },
-];
+
 
 export function ConcernFinder() {
   return (
@@ -202,7 +95,7 @@ export function ConcernFinder() {
           <SectionHeading
             eyebrow="Not sure who to see?"
             title="Start with what’s bothering you."
-            intro="Tap the concern closest to yours. We’ll open the booking form with the right specialist already selected."
+            intro="Tap the concern closest to yours. We’ll suggest the right specialist and help you pick a time — in about 30 seconds."
           />
           <div className="mt-8 flex flex-wrap gap-4 text-sm font-semibold">
             <span className="inline-flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-blush" /> {ortho.name}</span>
@@ -211,11 +104,11 @@ export function ConcernFinder() {
         </div>
         <ul className="grid gap-3 sm:grid-cols-2">
           {CONCERNS.map((c) => {
-            const isOrtho = c.doctor.speciality === 'orthodontics';
+            const isOrtho = c.doctor?.speciality === 'orthodontics';
             return (
               <li key={c.label} data-reveal>
-                <Link
-                  href={`/book?doctor=${c.doctor.slug}${c.treatment ? `&treatment=${c.treatment}` : ''}`}
+                <BookTrigger
+                  prefill={{ concern: c.id }}
                   className={cn(
                     'group flex h-full items-center justify-between gap-4 rounded-2xl border bg-paper p-5 transition hover:-translate-y-0.5 hover:shadow-soft',
                     isOrtho ? 'border-blush/60 hover:border-rose' : 'border-mint hover:border-teal',
@@ -226,7 +119,7 @@ export function ConcernFinder() {
                     <span className={cn('mt-1 block text-sm', isOrtho ? 'text-rose' : 'text-teal')}>{c.hint}</span>
                   </span>
                   <ArrowUpRight className="h-5 w-5 shrink-0 text-ink/40 transition group-hover:rotate-45 group-hover:text-ink" aria-hidden />
-                </Link>
+                </BookTrigger>
               </li>
             );
           })}
@@ -261,7 +154,7 @@ export function HowBookingWorks() {
           ))}
         </ol>
         <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link href="/book" className="btn-blush text-base"><CalendarCheck className="h-5 w-5" aria-hidden /> Book an appointment</Link>
+          <BookTrigger className="btn-blush text-base"><CalendarCheck className="h-5 w-5" aria-hidden /> Book an appointment</BookTrigger>
           <a href={telHref} className="btn-ghost-dark text-base"><Phone className="h-5 w-5" aria-hidden /> Call {clinic.phone.display}</a>
         </div>
       </div>
@@ -292,39 +185,6 @@ export function ClinicTour() {
         </div>
         <div className="mt-10">
           <Gallery items={TOUR} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────── Google rating ─────────────────────────── */
-export function GoogleRating() {
-  return (
-    <section className="bg-white py-16">
-      <div className="container-site">
-        <div data-reveal className="relative overflow-hidden rounded-[2rem] bg-lavender-soft px-6 py-10 sm:px-12">
-          <Motif className="pointer-events-none absolute -bottom-16 -right-10 h-64 w-64 text-lavender/40" />
-          <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-            <div className="flex items-center gap-6">
-              <p className="font-heading text-6xl font-semibold text-ink sm:text-7xl">{clinic.google.rating}</p>
-              <div>
-                <p className="flex gap-1" role="img" aria-label={`${clinic.google.rating} out of 5 stars`}>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-[#FBBC04] text-[#FBBC04]" aria-hidden />
-                  ))}
-                </p>
-                <p className="mt-2 font-semibold text-ink">
-                  Rated on Google by {clinic.google.reviewCount} patients
-                  <Verify show={clinic.google.verify} />
-                </p>
-                <p className="text-sm text-muted">Every review is from a real Google account — read them in full on Google.</p>
-              </div>
-            </div>
-            <a href={clinic.mapsUrl} target="_blank" rel="noopener noreferrer" className="btn-ink">
-              Read our Google reviews <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </a>
-          </div>
         </div>
       </div>
     </section>
@@ -412,7 +272,7 @@ export function CtaBand() {
           <h2 className="relative mx-auto max-w-2xl text-3xl font-semibold text-white sm:text-5xl">Your first step is a conversation.</h2>
           <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/75">Tell us what’s bothering you. We’ll match you with the right specialist and a time that works.</p>
           <div className="relative mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link href="/book" className="btn-blush text-base"><CalendarCheck className="h-5 w-5" aria-hidden /> Book an appointment</Link>
+            <BookTrigger className="btn-blush text-base"><CalendarCheck className="h-5 w-5" aria-hidden /> Book an appointment</BookTrigger>
             <a href={generalWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn-wa text-base"><WhatsAppIcon className="h-5 w-5" /> WhatsApp</a>
             <a href={telHref} className="btn-ghost-dark text-base"><Phone className="h-5 w-5" aria-hidden /> Call</a>
           </div>

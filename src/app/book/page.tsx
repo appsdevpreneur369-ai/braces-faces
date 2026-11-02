@@ -8,6 +8,7 @@ import { clinic, fullAddress, telHref } from '@/content/clinic';
 export const metadata: Metadata = {
   title: 'Book an Appointment',
   description: 'Request an appointment with our orthodontist or maxillofacial surgeon in Tadepalli. Send your details on WhatsApp or call +91 88669 22449.',
+  alternates: { canonical: '/book' },
 };
 
 export default function BookPage() {

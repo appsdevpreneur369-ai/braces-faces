@@ -10,6 +10,7 @@ import { cn } from '@/lib/cn';
 export const metadata: Metadata = {
   title: 'Treatments',
   description: 'Invisalign, clear aligners, Pitts and self-ligating braces, night guards, facial trauma, corrective jaw surgery, TMJ, cleft lip & palate and more at Braces & Faces, Tadepalli.',
+  alternates: { canonical: '/treatments' },
 };
 
 export default function TreatmentsPage() {

@@ -12,7 +12,8 @@ export interface GalleryItem {
 }
 
 /** Bento grid on desktop, swipeable row on phones; any photo opens a keyboard-friendly lightbox. */
-export function Gallery({ items }: { items: GalleryItem[] }) {
+/** aboveFold: the gallery is the page's main content (no scroll-reveal, first photo loads at once). */
+export function Gallery({ items, aboveFold }: { items: GalleryItem[]; aboveFold?: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState(0);
 
@@ -41,14 +42,14 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
     <>
       <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:auto-rows-[190px] md:grid-cols-4 md:gap-4 md:overflow-visible md:px-0 lg:auto-rows-[220px]">
         {items.map((it, i) => (
-          <li key={it.name} data-reveal className={cn('w-[78%] shrink-0 snap-center md:w-auto', spans[i % spans.length])}>
+          <li key={it.name} data-reveal={aboveFold ? undefined : true} className={cn('w-[78%] shrink-0 snap-center md:w-auto', spans[i % spans.length])}>
             <button
               type="button"
               onClick={() => open(i)}
               className="group relative block aspect-[4/3] h-full w-full overflow-hidden rounded-card bg-lavender-soft md:aspect-auto"
               aria-label={`View photo: ${it.caption}`}
             >
-              <Photo name={it.name} alt={it.alt} sizes="(min-width: 768px) 40vw, 80vw" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+              <Photo name={it.name} alt={it.alt} priority={aboveFold && i === 0} sizes="(min-width: 768px) 40vw, 80vw" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
               <span className="absolute inset-0 bg-gradient-to-t from-ink-deep/70 via-transparent to-transparent opacity-90" />
               <span className="absolute bottom-3 left-4 right-12 text-left text-sm font-semibold text-white">{it.caption}</span>
               <span className="absolute bottom-3 right-3 grid h-8 w-8 place-items-center rounded-full bg-white/20 text-white backdrop-blur transition group-hover:bg-white group-hover:text-ink">

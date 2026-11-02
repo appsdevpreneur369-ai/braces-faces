@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { CalendarCheck, Phone } from 'lucide-react';
 import { telHref } from '@/content/clinic';
 import { generalWhatsappHref } from '@/lib/appointment';
+import { BookTrigger } from './assistant/AssistantProvider';
 import { WhatsAppIcon } from './ui';
 
 /** Thumb-reach actions on phones: Call · WhatsApp · Book. */
@@ -17,10 +17,10 @@ export function MobileActionBar() {
           <WhatsAppIcon className="h-5 w-5 text-wa-deep" />
           WhatsApp
         </a>
-        <Link href="/book" className="flex h-[52px] items-center justify-center gap-2 rounded-2xl bg-ink text-sm font-semibold text-white">
+        <BookTrigger className="flex h-[52px] items-center justify-center gap-2 rounded-2xl bg-ink text-sm font-semibold text-white">
           <CalendarCheck className="h-4 w-4" aria-hidden />
           Book
-        </Link>
+        </BookTrigger>
       </div>
     </div>
   );
