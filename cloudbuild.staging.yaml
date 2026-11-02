@@ -1,0 +1,20 @@
+# Staging image for the Braces & Faces website. NEXT_PUBLIC_* values are baked in at build time.
+#   gcloud builds submit --project sincere-stock-499113-f1 --region asia-south1 \
+#     --config cloudbuild.staging.yaml --substitutions _TAG=$(git rev-parse --short HEAD) .
+# Staging = noindex + "To confirm" badges on. The site calls no API, so there are no API/CORS settings.
+substitutions:
+  _IMAGE: asia-south1-docker.pkg.dev/sincere-stock-499113-f1/clinicflow/bnf-frontend
+  _TAG: manual
+  _SITE_URL: https://bnf-frontend-staging-1071497363324.asia-south1.run.app
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --build-arg=NEXT_PUBLIC_SITE_ENV=staging
+      - --build-arg=NEXT_PUBLIC_NOINDEX=true
+      - --build-arg=NEXT_PUBLIC_SITE_URL=${_SITE_URL}
+      - -t
+      - ${_IMAGE}:${_TAG}
+      - .
+images:
+  - ${_IMAGE}:${_TAG}
