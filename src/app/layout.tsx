@@ -14,7 +14,16 @@ import './globals.css';
 // Same type pairing as the Aishwarya clinic site (owner, 2 Nov 2026): Sora headings + wordmark, Nunito Sans body.
 // Both variable fonts, self-hosted by next/font (no Google request at runtime), swap + metric-matched fallbacks.
 const heading = Sora({ subsets: ['latin'], weight: 'variable', variable: '--font-heading', display: 'swap' });
-const body = Nunito_Sans({ subsets: ['latin'], weight: 'variable', variable: '--font-body', display: 'swap' });
+// next/font has no metric data for Nunito Sans ("Failed to find font override values"), so its automatic size-adjusted
+// fallback is off and the fallback stack is given explicitly (no build warning).
+const body = Nunito_Sans({
+  subsets: ['latin'],
+  weight: 'variable',
+  variable: '--font-body',
+  display: 'swap',
+  adjustFontFallback: false,
+  fallback: ['system-ui', 'Segoe UI', 'Arial', 'sans-serif'],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
