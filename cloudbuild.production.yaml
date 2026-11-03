@@ -1,0 +1,22 @@
+# PRODUCTION image for the Braces & Faces website (owner approved 2026-11-03).
+#   gcloud builds submit --project sincere-stock-499113-f1 --region asia-south1 \
+#     --config cloudbuild.production.yaml --substitutions _TAG=$(git rev-parse --short HEAD) .
+# Production = indexable (no noindex header / robots Disallow), no "To confirm" badges, canonical URLs on the
+# clinic's subdomain. Served by Cloud Run service bnf-frontend, reached through Cloudflare (see CLAUDE.md).
+substitutions:
+  _IMAGE: asia-south1-docker.pkg.dev/sincere-stock-499113-f1/clinicflow/bnf-frontend
+  _TAG: manual
+  _SITE_URL: https://braces-faces.clinicflow247.com
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --build-arg=NEXT_PUBLIC_SITE_ENV=production
+      - --build-arg=NEXT_PUBLIC_NOINDEX=false
+      - --build-arg=NEXT_PUBLIC_SHOW_DRAFT_BADGES=false
+      - --build-arg=NEXT_PUBLIC_SITE_URL=${_SITE_URL}
+      - -t
+      - ${_IMAGE}:${_TAG}-prod
+      - .
+images:
+  - ${_IMAGE}:${_TAG}-prod
